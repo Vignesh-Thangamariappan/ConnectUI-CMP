@@ -25,6 +25,9 @@ jobs:
         
       - name: Build Android Library
         run: ./gradlew :shared:assembleRelease
+        
+      - name: Run Tests
+        run: ./gradlew :shared:testReleaseUnitTest
 
   ios:
     name: Build iOS XCFramework
@@ -44,6 +47,9 @@ jobs:
         
       - name: Build XCFramework
         run: ./gradlew :shared:assembleConnectUIReleaseXCFramework
+        
+      - name: Run iOS Tests
+        run: ./gradlew :shared:iosSimulatorArm64Test
 
   release:
     name: Create Release Tag
