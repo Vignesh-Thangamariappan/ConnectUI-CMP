@@ -1,0 +1,14 @@
+.gradle
+/build
+/*/build
+/shared/build
+/.konan
+.DS_Store
+*.iml
+.idea
+/iosApp/iosApp.xcworkspace
+/iosApp/DerivedData
+.kotlin
+node_modules
+.gemini
+/brain
