@@ -60,3 +60,21 @@ val connectView = ConnectViewFactory.createView(
 - Fully matches Figma specifications.
 - **Static Content:** Fully optimized for quick integration without complex configuration.
 - **Native Delegation:** Handle events (avatar taps, button clicks) directly in your native code.
+---
+
+## 🛠 Local Environment Setup
+
+If you have multiple Java versions installed (e.g., Java 25 as default) and need to force Gradle to use Java 17 locally without breaking the CI:
+
+1. Create a `gradle.properties` in your local home directory (`~/.gradle/gradle.properties`).
+2. Add the following line:
+   ```properties
+   org.gradle.java.home=/path/to/your/jdk17/Contents/Home
+   ```
+   *Note: For macOS with Homebrew, the path is typically: `/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home`*
+
+Alternatively, set your `JAVA_HOME` environment variable before running gradlew:
+```bash
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+./gradlew ...
+```
