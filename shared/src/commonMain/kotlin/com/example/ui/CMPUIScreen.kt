@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ConnectScreen(
-    delegate: ConnectDelegate? = null
+fun CMPUIScreen(
+    delegate: CMPUIDelegate? = null
 ) {
     val features = listOf(
         FeatureItem("chat", "All on the same page", "Chat across desktop and mobile with real-time notifications."),
@@ -54,7 +54,7 @@ fun ConnectScreen(
     ) {
         
         Text(
-            text = "Connect",
+            text = "CMPUI",
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -94,7 +94,7 @@ fun ConnectScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Collaboration works best in one place. Connect keeps conversations flowing, even on the go.",
+                text = "Collaboration works best in one place. CMPUI keeps conversations flowing, even on the go.",
                 fontSize = 16.sp,
                 color = Color.Black.copy(alpha = 0.7f),
                 lineHeight = 24.sp

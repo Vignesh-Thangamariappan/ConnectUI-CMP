@@ -19,14 +19,14 @@ kotlin {
         }
     }
     
-    val xcf = XCFramework("ConnectUI")
+    val xcf = XCFramework("CMPUI")
     listOf(
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "ConnectUI"
+            baseName = "CMPUI"
             isStatic = true
             xcf.add(this)
         }
@@ -50,7 +50,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.example.connectui"
+    namespace = "com.example.cmpui"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

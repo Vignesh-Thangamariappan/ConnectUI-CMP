@@ -25,5 +25,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ConnectUI"
+rootProject.name = "CMPUI-CMP"
 include(":shared")

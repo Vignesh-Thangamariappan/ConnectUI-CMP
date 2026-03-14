@@ -3,12 +3,12 @@ package com.example.ui
 import androidx.compose.ui.window.ComposeUIViewController
 import platform.UIKit.UIViewController
 
-object ConnectViewControllerFactory {
+object CMPUIViewControllerFactory {
     fun createViewController(
-        delegate: ConnectDelegate? = null
+        delegate: CMPUIDelegate? = null
     ): UIViewController {
         return ComposeUIViewController {
-            ConnectScreen(delegate = delegate)
+            CMPUIScreen(delegate = delegate)
         }
     }
 }

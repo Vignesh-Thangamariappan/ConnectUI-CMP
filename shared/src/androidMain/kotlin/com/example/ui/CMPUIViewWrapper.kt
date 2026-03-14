@@ -4,14 +4,14 @@ import android.content.Context
 import android.view.View
 import androidx.compose.ui.platform.ComposeView
 
-object ConnectViewFactory {
+object CMPUIViewFactory {
     fun createView(
         context: Context,
-        delegate: ConnectDelegate? = null
+        delegate: CMPUIDelegate? = null
     ): View {
         return ComposeView(context).apply {
             setContent {
-                ConnectScreen(delegate = delegate)
+                CMPUIScreen(delegate = delegate)
             }
         }
     }

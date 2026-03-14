@@ -1,6 +1,6 @@
 package com.example.ui
 
-interface ConnectDelegate {
+interface CMPUIDelegate {
     fun onAvatarTapped(avatar: AvatarItem)
     fun onAddTeamMemberClicked()
 }

@@ -54,8 +54,8 @@ jobs:
       - name: Upload XCFramework Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ConnectUI.xcframework
-          path: shared/build/XCFrameworks/release/ConnectUI.xcframework
+          name: CMPUI.xcframework
+          path: shared/build/XCFrameworks/release/CMPUI.xcframework
 
   release:
     name: Create Release Tag
@@ -80,15 +80,15 @@ jobs:
       - name: Download XCFramework Artifact
         uses: actions/download-artifact@v4
         with:
-          name: ConnectUI.xcframework
-          path: shared/build/XCFrameworks/release/ConnectUI.xcframework
+          name: CMPUI.xcframework
+          path: shared/build/XCFrameworks/release/CMPUI.xcframework
 
       - name: Zip XCFramework and Compute Checksum
         id: checksum
         run: |
           cd shared/build/XCFrameworks/release/
-          zip -r ConnectUI.xcframework.zip ConnectUI.xcframework
-          CHECKSUM=$(swift package compute-checksum ConnectUI.xcframework.zip)
+          zip -r CMPUI.xcframework.zip CMPUI.xcframework
+          CHECKSUM=$(swift package compute-checksum CMPUI.xcframework.zip)
           echo "CHECKSUM=$CHECKSUM" >> $GITHUB_OUTPUT
 
       - name: Create a GitHub release
@@ -102,12 +102,12 @@ jobs:
             
             **SPM Checksum**: `${{ steps.checksum.outputs.CHECKSUM }}`
           generate_release_notes: true
-          files: shared/build/XCFrameworks/release/ConnectUI.xcframework.zip
+          files: shared/build/XCFrameworks/release/CMPUI.xcframework.zip
 
       - name: Trigger SDK Repo Update
         run: |
           curl -X POST \
             -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: token ${{ secrets.SDK_REPO_TOKEN }}" \
-            https://api.github.com/repos/${{ github.repository_owner }}/ConnectUI-SDK/dispatches \
+            https://api.github.com/repos/${{ github.repository_owner }}/CMPUI-SDK/dispatches \
             -d '{"event_type": "core_release", "client_payload": {"tag": "${{ steps.tag_action.outputs.new_tag }}", "checksum": "${{ steps.checksum.outputs.CHECKSUM }}"}}'

@@ -1,39 +1,39 @@
-# ConnectUI Compose Multiplatform
+# CMPUI Compose Multiplatform
 
-ConnectUI is a beautiful, reusable "Connect" screen library built with **Compose Multiplatform (CMP)**. It is designed to be easily integrated into existing native Android and iOS applications with minimal setup.
+CMPUI is a beautiful, reusable "Connect" screen library built with **Compose Multiplatform (CMP)**. It is designed to be easily integrated into existing native Android and iOS applications with minimal setup.
 
 ## 🚀 Integration
 
 ### iOS (Swift Package Manager)
 
-You can integrate ConnectUI into any iOS project (UIKit or SwiftUI) using Swift Package Manager.
+You can integrate CMPUI into any iOS project (UIKit or SwiftUI) using Swift Package Manager.
 
 1. In Xcode, go to **File > Add Packages...**
-2. Enter the repository URL: `https://github.com/Vignesh-Thangamariappan/ConnectUI-CMP`
+2. Enter the repository URL: `https://github.com/Vignesh-Thangamariappan/CMPUI-CMP`
 3. Choose the dependency rule (e.g., Up to Next Major Version).
 4. Add the library to your target:
-   - **`ConnectUISwift`**: Recommended for modern SwiftUI projects.
-   - **`ConnectUI`**: Use for pure UIKit projects.
+   - **`CMPUISwift`**: Recommended for modern SwiftUI projects.
+   - **`CMPUI`**: Use for pure UIKit projects.
 
 #### Add to `Package.swift`
 If your project is also a Swift Package, add the following to your `dependencies`:
 ```swift
-.package(url: "https://github.com/Vignesh-Thangamariappan/ConnectUI-CMP.git", from: "1.0.0")
+.package(url: "https://github.com/Vignesh-Thangamariappan/CMPUI-CMP.git", from: "1.0.0")
 ```
 And then in your target dependencies:
 ```swift
-.product(name: "ConnectUISwift", package: "ConnectUI-CMP") // Or "ConnectUI"
+.product(name: "CMPUISwift", package: "CMPUI-CMP") // Or "CMPUI"
 ```
 
 > [!IMPORTANT]
-> Since this is a CMP project, the binary is not committed to the repo. If you are integrating into a local development environment, you must first run `./gradlew :shared:assembleConnectUIReleaseXCFramework` to generate the framework locally.
+> Since this is a CMP project, the binary is not committed to the repo. If you are integrating into a local development environment, you must first run `./gradlew :shared:assembleCMPUIReleaseXCFramework` to generate the framework locally.
 
 ### Android
 
 1. Add the following to your `settings.gradle.kts`:
    ```kotlin
    include(":shared")
-   project(":shared").projectDir = File("path/to/ConnectUI-CMP/shared")
+   project(":shared").projectDir = File("path/to/CMPUI-CMP/shared")
    ```
 2. Add the dependency to your app-level `build.gradle.kts`:
    ```kotlin
@@ -49,18 +49,18 @@ Detailed code examples for both platforms can be found in **[Usage.md](Usage.md)
 ### Quick Example (SwiftUI)
 ```swift
 import SwiftUI
-import ConnectUISwift
+import CMPUISwift
 
 struct ContentView: View {
     var body: some View {
-        ConnectView(delegate: MyHandler())
+        CMPUIView(delegate: MyHandler())
     }
 }
 ```
 
 ### Quick Example (Android)
 ```kotlin
-val connectView = ConnectViewFactory.createView(
+val cmpuiView = CMPUIViewFactory.createView(
     context = context,
     delegate = myHandler
 )
