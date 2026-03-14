@@ -10,6 +10,14 @@ This package builds natively. To ensure the iOS components are available, you mu
 ```
 This generates the framework referenced by Swift Package Manager.
 
+> [!TIP]
+> **iOS Performance Optimization**: For optimal performance on high-refresh-rate iPhones (ProMotion), add the following to your app's `Info.plist`:
+> ```xml
+> <key>CADisableMinimumFrameDurationOnPhone</key>
+> <true/>
+> ```
+> While `CMPUI` disables the strict sanity check to prevent crashes, adding this entry ensures the best user experience.
+
 ---
 
 ## iOS Usage (Swift Package Dependency)

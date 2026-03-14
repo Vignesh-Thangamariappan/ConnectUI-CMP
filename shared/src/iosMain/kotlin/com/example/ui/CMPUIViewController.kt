@@ -7,7 +7,11 @@ object CMPUIViewControllerFactory {
     fun createViewController(
         delegate: CMPUIDelegate? = null
     ): UIViewController {
-        return ComposeUIViewController {
+        return ComposeUIViewController(
+            configure = {
+                enforceStrictPlistSanityCheck = false
+            }
+        ) {
             CMPUIScreen(delegate = delegate)
         }
     }

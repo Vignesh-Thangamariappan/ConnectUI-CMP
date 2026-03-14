@@ -73,3 +73,4 @@ To integrate into an Android app:
   ```
 - **Static UI**: The `CMPUIScreen` is currently static. All data (avatars, features) are hardcoded for simplicity.
 - **Delegation**: Always implement `CMPUIDelegate` to handle interactions.
+- **iOS Performance**: Recommend consumers add `CADisableMinimumFrameDurationOnPhone = true` to their `Info.plist` for ProMotion support.
