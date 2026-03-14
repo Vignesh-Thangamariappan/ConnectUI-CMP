@@ -61,7 +61,7 @@ jobs:
     name: Create Release Tag
     needs: [android, ios]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: macos-latest # Switch to macos to use 'swift package compute-checksum'
     permissions:
       contents: write
       pull-requests: read
@@ -69,6 +69,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: '0'
+          token: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Bump version and push tag
         id: tag_action
@@ -76,6 +77,36 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           default_bump: patch
+          
+      - name: Download XCFramework Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ConnectUI.xcframework
+          path: shared/build/XCFrameworks/release/ConnectUI.xcframework
+
+      - name: Zip XCFramework and Compute Checksum
+        id: checksum
+        run: |
+          cd shared/build/XCFrameworks/release/
+          zip -r ConnectUI.xcframework.zip ConnectUI.xcframework
+          CHECKSUM=$(swift package compute-checksum ConnectUI.xcframework.zip)
+          echo "CHECKSUM=$CHECKSUM" >> $GITHUB_OUTPUT
+          
+      - name: Update Package.swift
+        run: |
+          TAG="${{ steps.tag_action.outputs.new_tag }}"
+          CHECKSUM="${{ steps.checksum.outputs.CHECKSUM }}"
+          URL="https://github.com/${{ github.repository }}/releases/download/${TAG}/ConnectUI.xcframework.zip"
+          
+          # Use sed to update URL and Checksum in Package.swift
+          sed -i '' "s|url: \".*\"|url: \"$URL\"|g" Package.swift
+          sed -i '' "s|checksum: \".*\"|checksum: \"$CHECKSUM\"|g" Package.swift
+          
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Package.swift
+          git commit -m "chore: update Package.swift for release ${TAG}"
+          git push origin main
           
       - name: Create a GitHub release
         id: create_release
@@ -85,30 +116,4 @@ jobs:
           name: Release ${{ steps.tag_action.outputs.new_tag }}
           body: ${{ steps.tag_action.outputs.changelog }}
           generate_release_notes: true
-          
-      - name: Set up JDK 17 for Build
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          
-      - name: Download XCFramework Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ConnectUI.xcframework
-          path: shared/build/XCFrameworks/release/ConnectUI.xcframework
-
-      - name: Zip XCFramework
-        run: |
-          cd shared/build/XCFrameworks/release/
-          zip -r ConnectUI.xcframework.zip ConnectUI.xcframework
-          
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: shared/build/XCFrameworks/release/ConnectUI.xcframework.zip
-          asset_name: ConnectUI.xcframework.zip
-          asset_content_type: application/zip
+          files: shared/build/XCFrameworks/release/ConnectUI.xcframework.zip
