@@ -46,7 +46,7 @@ jobs:
         run: chmod +x gradlew
         
       - name: Build XCFramework
-        run: ./gradlew :shared:assembleConnectUIReleaseXCFramework
+        run: ./gradlew :shared:assembleCMPUIReleaseXCFramework
         
       - name: Run iOS Tests
         run: ./gradlew :shared:iosSimulatorArm64Test
