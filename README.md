@@ -15,6 +15,16 @@ You can integrate ConnectUI into any iOS project (UIKit or SwiftUI) using Swift 
    - **`ConnectUISwift`**: Recommended for modern SwiftUI projects.
    - **`ConnectUI`**: Use for pure UIKit projects.
 
+#### Add to `Package.swift`
+If your project is also a Swift Package, add the following to your `dependencies`:
+```swift
+.package(url: "https://github.com/Vignesh-Thangamariappan/ConnectUI-CMP.git", from: "1.0.0")
+```
+And then in your target dependencies:
+```swift
+.product(name: "ConnectUISwift", package: "ConnectUI-CMP") // Or "ConnectUI"
+```
+
 > [!IMPORTANT]
 > Since this is a CMP project, the binary is not committed to the repo. If you are integrating into a local development environment, you must first run `./gradlew :shared:assembleConnectUIReleaseXCFramework` to generate the framework locally.
 

@@ -18,7 +18,11 @@ To integrate into an iOS app using SPM:
 2. **Select Target**:
    - `ConnectUISwift`: For SwiftUI projects (recommended).
    - `ConnectUI`: For pure UIKit projects.
-3. **Usage (SwiftUI)**:
+3. **Add via Package.swift**:
+   ```swift
+   .package(url: "https://github.com/Vignesh-Thangamariappan/ConnectUI-CMP.git", from: "1.0.0")
+   ```
+4. **Usage (SwiftUI)**:
    ```swift
    import SwiftUI
    import ConnectUISwift
