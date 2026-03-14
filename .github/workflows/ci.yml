@@ -51,6 +51,12 @@ jobs:
       - name: Run iOS Tests
         run: ./gradlew :shared:iosSimulatorArm64Test
 
+      - name: Upload XCFramework Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ConnectUI.xcframework
+          path: shared/build/XCFrameworks/release/ConnectUI.xcframework
+
   release:
     name: Create Release Tag
     needs: [android, ios]
@@ -86,6 +92,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           
+      - name: Download XCFramework Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ConnectUI.xcframework
+          path: shared/build/XCFrameworks/release/ConnectUI.xcframework
+
       - name: Zip XCFramework
         run: |
           cd shared/build/XCFrameworks/release/
