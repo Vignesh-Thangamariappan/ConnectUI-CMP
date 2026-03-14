@@ -45,84 +45,86 @@ fun CMPUIScreen(
         AvatarItem("5", "", AvatarStatus.ONLINE)
     )
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFFAFAFA))
-            .verticalScroll(rememberScrollState())
-            .padding(top = 48.dp, bottom = 24.dp)
-    ) {
-        
-        Text(
-            text = "CMPUI",
-            fontWeight = FontWeight.Bold,
-            fontSize = 18.sp,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            color = Color.Black
-        )
-        
-        Spacer(modifier = Modifier.height(32.dp))
-        
-        // Avatars Layout
-        // Static Layout wrapping multiple rows
-        FlowRow(
+    MaterialTheme {
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 32.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .fillMaxSize()
+                .background(Color(0xFFFAFAFA))
+                .verticalScroll(rememberScrollState())
+                .padding(top = 48.dp, bottom = 24.dp)
         ) {
-            avatars.forEach { avatar ->
-                Box(modifier = Modifier.padding(horizontal = 8.dp)) {
-                    AvatarView(avatar = avatar) {
-                        delegate?.onAvatarTapped(it)
+
+            Text(
+                text = "CMPUI",
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                color = Color.Black
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Avatars Layout
+            // Static Layout wrapping multiple rows
+            FlowRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 32.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                avatars.forEach { avatar ->
+                    Box(modifier = Modifier.padding(horizontal = 8.dp)) {
+                        AvatarView(avatar = avatar) {
+                            delegate?.onAvatarTapped(it)
+                        }
                     }
                 }
             }
-        }
-        Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
-        Column(modifier = Modifier.padding(horizontal = 24.dp)) {
-            Text(
-                text = "Connect with your team,\nwherever work takes you",
-                fontWeight = FontWeight.Bold,
-                fontSize = 28.sp,
-                color = Color.Black,
-                lineHeight = 36.sp
-            )
+            Column(modifier = Modifier.padding(horizontal = 24.dp)) {
+                Text(
+                    text = "Connect with your team,\nwherever work takes you",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 28.sp,
+                    color = Color.Black,
+                    lineHeight = 36.sp
+                )
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                text = "Collaboration works best in one place. CMPUI keeps conversations flowing, even on the go.",
-                fontSize = 16.sp,
-                color = Color.Black.copy(alpha = 0.7f),
-                lineHeight = 24.sp
-            )
-        }
+                Text(
+                    text = "Collaboration works best in one place. CMPUI keeps conversations flowing, even on the go.",
+                    fontSize = 16.sp,
+                    color = Color.Black.copy(alpha = 0.7f),
+                    lineHeight = 24.sp
+                )
+            }
 
-        Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
-        features.forEach { feature ->
-            FeatureRow(feature = feature)
+            features.forEach { feature ->
+                FeatureRow(feature = feature)
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+
             Spacer(modifier = Modifier.height(24.dp))
-        }
-        
-        Spacer(modifier = Modifier.weight(1f, fill = false))
 
-        Button(
-            onClick = { delegate?.onAddTeamMemberClicked() },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp)
-                .height(56.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF111111)),
-            shape = RoundedCornerShape(28.dp),
-            elevation = ButtonDefaults.elevation(0.dp)
-        ) {
-            Icon(imageVector = Icons.Default.Add, contentDescription = null, tint = Color.White)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Team member", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+            Button(
+                onClick = { delegate?.onAddTeamMemberClicked() },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .height(56.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF111111)),
+                shape = RoundedCornerShape(28.dp),
+                elevation = ButtonDefaults.elevation(0.dp)
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = null, tint = Color.White)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = "Team member", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+            }
         }
     }
 }
