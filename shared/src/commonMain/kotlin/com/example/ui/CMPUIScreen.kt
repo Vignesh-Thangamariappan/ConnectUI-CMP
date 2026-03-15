@@ -28,13 +28,12 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-
 fun CMPUIScreen(
     delegate: CMPUIDelegate? = null
 ) {
     val features = listOf(
-        FeatureItem("chat", "All on the same page", "Chat across desktop and mobile with real-time notifications."),
-        FeatureItem("messages", "Conversations that count", "Share messages, files, images, and notes - decisions move faster."),
+        FeatureItem("chat", "All on the same page", "Chat with your team and customers on desktop or mobile with real-time alerts."),
+        FeatureItem("messages", "Conversations that count", "Share messages, files, images, and notes—decisions move faster."),
         FeatureItem("people", "Message. Share. Get things done.", "Start 1-to-1 or group chats to plan, coordinate and stay on track.")
     )
 
@@ -88,12 +87,14 @@ fun CMPUIVerticalLayout(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        features.forEach { feature ->
-            FeatureRow(feature = feature)
-            Spacer(modifier = Modifier.height(24.dp))
+        Column(modifier = Modifier.padding(horizontal = 24.dp)) {
+            features.forEach { feature ->
+                FeatureRow(feature = feature)
+                Spacer(modifier = Modifier.height(20.dp))
+            }
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         CMPUITeamMemberButton(delegate)
     }
@@ -108,34 +109,36 @@ fun CMPUIHorizontalLandscapeLayout(
     Row(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 48.dp),
+            .padding(horizontal = 60.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(
             modifier = Modifier
                 .weight(1f)
                 .verticalScroll(rememberScrollState())
-                .padding(vertical = 48.dp)
+                .padding(vertical = 60.dp)
         ) {
-            CMPUIDescription()
+            CMPUIDescription(isLandscape = true)
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
-            features.forEach { feature ->
-                FeatureRow(feature = feature)
-                Spacer(modifier = Modifier.height(24.dp))
+            Column {
+                features.forEach { feature ->
+                    FeatureRow(feature = feature)
+                    Spacer(modifier = Modifier.height(24.dp))
+                }
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
             CMPUITeamMemberButton(delegate)
         }
 
-        Spacer(modifier = Modifier.width(48.dp))
+        Spacer(modifier = Modifier.width(60.dp))
 
         Box(
             modifier = Modifier
-                .weight(1.2f)
+                .weight(1.3f)
                 .fillMaxHeight(),
             contentAlignment = Alignment.Center
         ) {
@@ -144,21 +147,21 @@ fun CMPUIHorizontalLandscapeLayout(
                 PhoneFrame(
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .offset(x = (-40).dp, y = (-20).dp)
+                        .offset(x = (-60).dp, y = (-30).dp)
                         .width(280.dp)
-                        .aspectRatio(0.5f),
+                        .aspectRatio(0.46f),
                     title = "Connect",
-                    isMain = true
+                    frameType = PhoneFrameType.LIST
                 )
                 
                 PhoneFrame(
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .offset(x = 60.dp, y = 40.dp)
+                        .offset(x = 80.dp, y = 50.dp)
                         .width(280.dp)
-                        .aspectRatio(0.5f),
+                        .aspectRatio(0.46f),
                     title = "Cody Fisher",
-                    isMain = false
+                    frameType = PhoneFrameType.CHAT
                 )
             }
         }
@@ -169,11 +172,11 @@ fun CMPUIHorizontalLandscapeLayout(
 fun CMPUIHeader() {
     Text(
         text = "Connect",
-        fontWeight = FontWeight.Bold,
-        fontSize = 18.sp,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp,
         modifier = Modifier.fillMaxWidth(),
         textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-        color = Color.Black
+        color = Color(0xFF1A1F23)
     )
 }
 
@@ -198,23 +201,23 @@ fun CMPUIAvatars(avatars: List<AvatarItem>, delegate: CMPUIDelegate?) {
 }
 
 @Composable
-fun CMPUIDescription() {
-    Column(modifier = Modifier.padding(horizontal = 24.dp)) {
+fun CMPUIDescription(isLandscape: Boolean = false) {
+    Column(modifier = Modifier.padding(horizontal = if (isLandscape) 0.dp else 24.dp)) {
         Text(
             text = "Connect with your team,\nwherever work takes you",
-            fontWeight = FontWeight.Bold,
-            fontSize = 32.sp,
-            color = Color.Black,
-            lineHeight = 40.sp
+            fontWeight = FontWeight.SemiBold,
+            fontSize = if (isLandscape) 32.sp else 20.sp,
+            color = Color(0xFF111111),
+            lineHeight = if (isLandscape) 40.sp else 28.sp
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
             text = "Collaboration works best in one place. Connect keeps conversations flowing, even on the go.",
-            fontSize = 18.sp,
-            color = Color.Black.copy(alpha = 0.7f),
-            lineHeight = 26.sp
+            fontSize = if (isLandscape) 18.sp else 14.sp,
+            color = Color(0xFF111111),
+            lineHeight = if (isLandscape) 26.sp else 22.sp
         )
     }
 }
@@ -237,33 +240,37 @@ fun CMPUITeamMemberButton(delegate: CMPUIDelegate?) {
     }
 }
 
+enum class PhoneFrameType {
+    LIST, CHAT
+}
+
 @Composable
 fun PhoneFrame(
     modifier: Modifier = Modifier,
     title: String,
-    isMain: Boolean
+    frameType: PhoneFrameType
 ) {
     Surface(
         modifier = modifier
-            .border(8.dp, Color.Black, RoundedCornerShape(32.dp))
-            .clip(RoundedCornerShape(32.dp)),
+            .border(10.dp, Color(0xFF1A1F23), RoundedCornerShape(36.dp))
+            .clip(RoundedCornerShape(36.dp)),
         color = Color.White,
-        elevation = 8.dp
+        elevation = 12.dp
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             // Status bar area
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp, vertical = 12.dp),
+                    .padding(horizontal = 24.dp, vertical = 14.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("9:41", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                Text("9:41", fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Default.List, contentDescription = null, modifier = Modifier.size(12.dp))
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Icon(Icons.Default.Email, contentDescription = null, modifier = Modifier.size(12.dp))
+                    Icon(Icons.Default.List, contentDescription = null, modifier = Modifier.size(14.dp))
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Icon(Icons.Default.Email, contentDescription = null, modifier = Modifier.size(14.dp))
                 }
             }
 
@@ -271,19 +278,19 @@ fun PhoneFrame(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .padding(horizontal = 20.dp, vertical = 10.dp)
             ) {
                 Text(
                     text = title,
-                    fontSize = 14.sp,
+                    fontSize = 15.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.align(Alignment.Center)
                 )
-                if (isMain) {
+                if (frameType == PhoneFrameType.LIST) {
                     Icon(
                         Icons.Default.Add,
                         contentDescription = null,
-                        modifier = Modifier.align(Alignment.CenterEnd).size(16.dp)
+                        modifier = Modifier.align(Alignment.CenterEnd).size(18.dp)
                     )
                 }
             }
@@ -293,31 +300,56 @@ fun PhoneFrame(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                repeat(if (isMain) 5 else 3) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                if (frameType == PhoneFrameType.LIST) {
+                    val listData = listOf(
+                        "Cody Fisher" to "Perfect!",
+                        "Dianne Russell" to "Good morning! I've booked a call...",
+                        "Floyd Miles" to "The pitch was amazing 💚",
+                        "Team Growth 🌲" to "Lucas: Bookings are up this week"
+                    )
+                    listData.forEach { (name, msg) ->
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Box(
+                                modifier = Modifier
+                                    .size(36.dp)
+                                    .clip(CircleShape)
+                                    .background(Color(0xFFEEEEEE))
+                            )
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Column {
+                                Text(text = name, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.Black)
+                                Text(text = msg, fontSize = 10.sp, color = Color.Gray, maxLines = 1)
+                            }
+                        }
+                    }
+                } else {
+                    val chatData = listOf(
+                        true to "Hey Cody 👋",
+                        true to "Claudio left a great review, nice job! He's just booked in for another 5 sessions.",
+                        false to "James! 😃",
+                        false to "Claudio left a great review, nice job! He's just booked in for another 5 sessions."
+                    )
+                    chatData.forEach { (isJames, msg) ->
                         Box(
                             modifier = Modifier
-                                .size(32.dp)
-                                .clip(CircleShape)
-                                .background(Color(0xFFEEEEEE))
-                        )
-                        Spacer(modifier = Modifier.width(12.dp))
-                        Column {
-                            Box(
-                                modifier = Modifier
-                                    .width(60.dp)
-                                    .height(8.dp)
-                                    .background(Color(0xFFEEEEEE), RoundedCornerShape(4.dp))
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Box(
-                                modifier = Modifier
-                                    .width(100.dp)
-                                    .height(6.dp)
-                                    .background(Color(0xFFF5F5F5), RoundedCornerShape(3.dp))
-                            )
+                                .fillMaxWidth()
+                                .padding(vertical = 2.dp),
+                            contentAlignment = if (isJames) Alignment.CenterStart else Alignment.CenterEnd
+                        ) {
+                            Surface(
+                                color = if (isJames) Color(0xFFF5F5F5) else Color(0xFF1A1F23),
+                                shape = RoundedCornerShape(12.dp),
+                                modifier = Modifier.widthIn(max = 180.dp)
+                            ) {
+                                Text(
+                                    text = msg,
+                                    fontSize = 10.sp,
+                                    modifier = Modifier.padding(8.dp),
+                                    color = if (isJames) Color.Black else Color.White
+                                )
+                            }
                         }
                     }
                 }
